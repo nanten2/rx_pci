@@ -51,9 +51,6 @@ find_package(catkin REQUIRED COMPONENTS
  add_message_files(
    FILES
    ml2437a_msg.msg
-   lakeshore_218_msg.msg
-   ondo_msg.msg
-   pfeiffer_tpg261_msg.msg
 )
 
 ## Generate services in the 'srv' folder
@@ -71,10 +68,10 @@ find_package(catkin REQUIRED COMPONENTS
 # )
 
 ## Generate added messages and services with any dependencies listed here
- generate_messages(
-   DEPENDENCIES
-   std_msgs
-)
+# generate_messages(
+#   DEPENDENCIES
+#   std_msgs
+# )
 
 ################################################
 ## Declare ROS dynamic reconfigure parameters ##

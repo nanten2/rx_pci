@@ -2,7 +2,7 @@
 
 import rospy
 import std_msgs
-from rx_pci_single_ros.msg import ondo.msg
+from rx_pci_single_ros.msg import ondo_msg
 
 import sys
 import time

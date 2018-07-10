@@ -28,17 +28,17 @@ if __name__=='__main__':
 
     # setup ros
     # ---------
-    pub = rospy.Publisher(topicname, pressure.msg.tpg261_values, queue_size=1)
+    pub = rospy.Publisher(topicname, pfeiffer_tpg261_msg, queue_size=1)
 
     # start loop
     # ----------
     while not rospy.is_shutdown():
-        ret = pfeiffer.query_pressure()
+        ret = vaccume.query_pressure()
 
-        msg = pressure.msg.tpg261_values()
+        msg = pfeiffer_tpg261_msg()
         msg.timestamp = time.time()
-        msg.ch1_value = ret
-        pub.publish(d)
+        msg.torr = ret
+        pub.publish(msg)
 
         time.sleep(rate)
         continue

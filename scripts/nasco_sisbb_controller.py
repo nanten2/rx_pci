@@ -13,7 +13,7 @@ def nasco_sisbb_set_voltage(ch, voltage, interval):
     voltage [mV] : float
     interval [ms?] : float
     """
-    cm = nasco_sisbb_controller_msg()
+    cm = nasco_sisbb_sub_msg()
     cm.ch = ch
     cm.voltage = voltage
     cm.interval = interval

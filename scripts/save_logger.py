@@ -10,6 +10,7 @@ from rx_pci_single_ros.msg import ml2437a_msg
 from rx_pci_single_ros.msg import lakeshore_218_msg
 #from rx_pci_single_ros.msg import preiffer_tpg261_msg
 from std_msgs.msg import Bool
+from rx_pci_single_ros.msg import nasco_sisbb_pub_msg
 
 # --
 data_exp_dir = '/home/amigos/data/experiment'
@@ -41,8 +42,15 @@ class save_logger(object):
         ch6_K : {6}
         ch7_K : {7}
         ch8_K : {8}\n'''
-        
+
+        self.sb_template = '''[sisbb]
+        timestamp : {0}
+        ch1_mv : {1}
+        ch1_ua : {2}
+        ch2_mv : {3}
+        ch2_ua : {4}\n'''
         pass
+       
 
     def power_meter(self, req):
         print(req)
@@ -62,6 +70,12 @@ class save_logger(object):
     def callback3(self, req):
         pass
 
+    def sisbb(self, req):
+        print(req)
+        self.f.write(self.sb_template.format(req.ch1_mv, req.ch1_ua, req.ch2_mv, req.ch2_ua))
+        pass
+
+        
     def stop_logger(self, req):
         self.stop_flag = 1
 
@@ -93,5 +107,6 @@ if __name__ == '__main__':
     sub = rospy.Subscriber('ml2437a', ml2437a_msg, sl.power_meter, queue_size=1)
     #sub1 = rospy.Subscriber('pfeiffer_tpg261', preiffer_tpg261_msg, sl.vaccume_monitor, queue_size=1)
     sub2 = rospy.Subscriber('lakeshore_218', lakeshore_218_msg, sl.lakeshore, queue_size=1)
+    sub3 = rospy.Subscriber('nasco_sisbb', nasco_sisbb_pub_msg, sl.sisbb, queue_size=1)
     sub_stop = rospy.Subscriber('stop_logger', Bool, sl.stop_logger, queue_size=1)
     sl.start_write_file()

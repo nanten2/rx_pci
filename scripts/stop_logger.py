@@ -1,9 +1,11 @@
 import rospy, time
 from std_msgs.msg import Bool
+"""
 try:
     rospy.init_node('stop_logger')
 except:
     pass
+"""
 
 def stop_logger():
     pub = rospy.Publisher('stop_logger', Bool, queue_size=1)

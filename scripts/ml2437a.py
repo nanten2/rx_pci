@@ -31,7 +31,7 @@ class ml2437a(object):
             msg.dBm = p_meter.measure()
             msg.timestamp = time.time()
             self.pub.publish(msg)
-            time.sleep(1)
+            time.sleep(0.5)
         return
 
 if __name__ == '__main__':

@@ -1,0 +1,7 @@
+<launch>
+  <node pkg="rx_pci_single_ros" name="pfeiffer_tpg261" type="tpg261_vaccume_monitor.py" required="true">
+    <!-- <remap from="tpg261" to="tpg261_1" /> -->
+    <param name="~host" value="192.168.100.112" />
+    <param name="~rate" value="1" />
+  </node>
+</launch>

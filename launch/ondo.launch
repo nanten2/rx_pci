@@ -1,0 +1,8 @@
+<launch>
+  <node pkg="rx_pci_single_ros" name="ondo" type="tr7nw_odno_monitor.py" required="true">
+    <remap from="tr7nw" to="tr7nw_1" />
+    <param name="~host" value="192.168.100.200" />
+    <param name="~serial_number" value="52181d25" />
+    <param name="~rate" value="1" />
+  </node>
+</launch>

@@ -1,7 +1,7 @@
 import rospy
-import std_msgs
-import rx_pci_single_ros.msg import nasco_sisbb_pub_msg
-import rx_pci_single_ros.msg import nasco_sisbb_sub_msg
+# import std_msgs
+from rx_pci_single_ros.msg import nasco_sisbb_pub_msg
+from rx_pci_single_ros.msg import nasco_sisbb_sub_msg
 
 import sys
 import time
@@ -37,13 +37,6 @@ class bb_controller(object):
             continue
                 
 
-    def start_thread_ROS(self):
-        th = threading.Thread(target=self.nascosisbb_iv_monitor)
-        th.setDaemon(True)
-        th.start()
-        th2 = threading.Thread(target=self.nascosisbb_set_voltage)
-        th2.setDaemon(True)
-        th2.start()
         
     def nascosisbb_iv_monitor(self):
         pub = rospy.Publisher(topicname, nasco_sisbb_msg, queue_size=1)
@@ -61,10 +54,18 @@ class bb_controller(object):
             pub.publish(msg)
             time.sleep(rete)
 
+    def start_thread_ROS(self):
+        th = threading.Thread(target=self.nascosisbb_iv_monitor)
+        th.setDaemon(True)
+        th.start()
+        th2 = threading.Thread(target=self.nascosisbb_set_voltage)
+        th2.setDaemon(True)
+        th2.start()
+
 if __name__ == '__main__':
     rospy.init_node(nodename)
     b = bb_controller()
     b.start_thread_ROS()
     print('[nasco_sisbb.py] : START SUBSCRIBER')
-    sub = rospy.Subscriber(topicname, nasco_sisbb_msg, b.nascosisbb_set_voltage)
+    sub = rospy.Subscriber(topicname, nasco_sisbb_msg, b.set_command)
     rospy.spin()

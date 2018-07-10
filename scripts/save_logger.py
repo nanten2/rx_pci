@@ -3,6 +3,9 @@ import rospy
 import time
 import os
 import sys
+
+#ros msg field
+#-------------
 from rx_pci_single_ros.msg import ml2437a_msg
 from rx_pci_single_ros.msg import lakeshore_218_msg
 #from rx_pci_single_ros.msg import preiffer_tpg261_msg
@@ -18,28 +21,17 @@ class save_logger(object):
 
     def __init__(self):
         self.stop_flag = 0
-        pass
 
-    def power_meter(self, req):
-        print(req)
-        __str = '''[power meter]
+        #template#
+        self.pm_template = '''[power meter]                           
+        timestamp : {0}
+        dBm : {1}\n'''
+
+        self.vm_template = '''[preiffer_tpg261]
         timestamp : {0} 
         dBm : {1}\n'''
-        self.f.write(__str.format(req.timestamp, req.dBm))
-        pass
 
-    def vaccume_monitor(self, req):
-        print(req)
-        __str = '''[preiffer_tpg261]
-        timestamp : {0} 
-        dBm : {1}'''
-        self.f.write(__str.format(req.timestamp, req.dBm))
-        pass
-                                        
-    
-    def lakeshore(self, req):
-        print(req)
-        __str = '''[lakeshore218]
+        self.ls_template = '''[lakeshore218]
         timestamp : {0}
         ch1_K : {1}
         ch2_K : {2}
@@ -49,7 +41,22 @@ class save_logger(object):
         ch6_K : {6}
         ch7_K : {7}
         ch8_K : {8}\n'''
-        self.f.write(__str.format(req.timestamp, req.ch1_K, req.ch2_K, req.ch3_K, req.ch4_K, req.ch5_K, req.ch6_K, req.ch7_K, req.ch8_K))
+        
+        pass
+
+    def power_meter(self, req):
+        print(req)
+        self.f.write(self.pm_template.format(req.timestamp, req.dBm))
+        pass
+
+    def vaccume_monitor(self, req):
+        print(req)
+        self.f.write(self.vm_template.format(req.timestamp, req.dBm))
+        pass
+                                        
+    def lakeshore(self, req):
+        print(req)
+        self.f.write(self.ls_template.format(req.timestamp, req.ch1_K, req.ch2_K, req.ch3_K, req.ch4_K, req.ch5_K, req.ch6_K, req.ch7_K, req.ch8_K))
         pass
 
     def callback3(self, req):

@@ -22,10 +22,16 @@ step = 0.01 # mV
 roop = int((final_voltage - initial_voltage) / step)
 
 for i in range(roop+1):
-    ctrl.nasco_sisbb_set_voltage(ch=1, voltage=i*step, interval=0.1)
-    ctrl.nasco_sisbb_set_voltage(ch=2, voltage=i*step, interval=0.1)
-    time.sleep(0.01)
-    
+    # ctrl.nasco_sisbb_set_voltage(ch=3, voltage=i*step, interval=0.1)
+    # ctrl.nasco_sisbb_set_voltage(ch=3, voltage=i*step, interval=0.1)
+    ctrl.nasco_sisbb_set_voltage(ch=0, voltage=i*step, interval=0.1)    
+    time.sleep(0.03)
+
+ctrl.nasco_sisbb_set_voltage(ch=1, voltage=0, interval=0.1)
+ctrl.nasco_sisbb_set_voltage(ch=2, voltage=0, interval=0.1)
+ctrl.nasco_sisbb_set_voltage(ch=3, voltage=0, interval=0.1)
+ctrl.nasco_sisbb_set_voltage(ch=4, voltage=0, interval=0.1)
+
 msg = save_logger_high_flag_msg()
 msg.timestamp = ''
 print(msg)

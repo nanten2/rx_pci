@@ -6,6 +6,7 @@ node_name = 'sisbb_controller'
 rospy.init_node(node_name)
 
 pub = rospy.Publisher('nasco_sisbb_command', nasco_sisbb_sub_msg, queue_size=1)
+time.sleep(0.1)
 
 def nasco_sisbb_set_voltage(ch, voltage, interval):
     """

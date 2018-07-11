@@ -1,66 +1,70 @@
+#!/usr/bin/env python3
+
 import rospy
-<<<<<<< HEAD
 # import std_msgs
-=======
 import std_msgs
->>>>>>> 056deb97209b639c386510af585ff60804086498
 from rx_pci_single_ros.msg import nasco_sisbb_pub_msg
 from rx_pci_single_ros.msg import nasco_sisbb_sub_msg
 
 import sys
 import time
 import threading
-import pyinterface.pci3165 as pci3165 # AD
-import pyinterface.pci3342 as pci3342 # DA
-
+import pyinterface
+ad = pyinterface.open(3165, 0)
+da = pyinterface.open(3342, 0)
 
 nodename = 'nasco_sisbb'
 topicname_pub = 'nasco_sisbb'
 topicname_sub = 'nasco_sisbb_command'
 
-rate = rospy.get_param('~rate')
+# rate = rospy.get_param('~rate')
 
 class bb_controller(object):
 
+    def __init__(self):
+        self.flag = 1
+        self.ch = 1
+    
     def set_command(self, req):
         self.timestamp = req.timestamp
         self.interval = req.interval
         self.ch = req.ch
-        self.mv = req.mv
+        self.mv = req.voltage
         self.flag = 0
         return
-
     
     def nascosisbb_set_voltage(self):
         while not rospy.is_shutdown():
             if self.flag == 1:
-                time.sleep(1)
+                time.sleep(0.01)
                 continue
-            else:
-                pci3342.set_voltage(self.ch, self.mv)
-                self.flag = 1
-                pass
-            time.sleep(rate)
+            ch = 'ch{0}'.format(self.ch)
+            print(ch)
+            mv = self.mv / 3
+            print(mv)
+            da.output_da_sim(ch, mv)
+            self.flag = 1
+            # time.sleep(rate)
+            time.sleep(0.01)
             continue
-                
-
         
         
     def nascosisbb_iv_monitor(self):
-        pub = rospy.Publisher(topicname_pub, nasco_sisbb_msg, queue_size=1)
-        msg = nasco_sisbb_msg()
+        pub = rospy.Publisher(topicname_pub, nasco_sisbb_pub_msg, queue_size=1)
+        msg = nasco_sisbb_pub_msg()
 
         while not rospy.is_shutdown():
-            ret = pci3165.query_input()
+            ret = ad.input_ad_master()
             
             msg.timestamp = time.time()
-            msg.ch1_mv = ret[?]
-            msg.ch1_ua = ret[?]
-            msg.ch2_mv = ret[?]
-            msg.ch2_ua = ret[?]
+            msg.ch1_mv = ret[0]
+            msg.ch1_ua = ret[1]
+            msg.ch2_mv = ret[2]
+            msg.ch2_ua = ret[3]
 
             pub.publish(msg)
-            time.sleep(rete)
+            # time.sleep(rete)
+            time.sleep(0.05)
             
 
     def start_thread_ROS(self):
@@ -76,9 +80,5 @@ if __name__ == '__main__':
     b = bb_controller()
     b.start_thread_ROS()
     print('[nasco_sisbb.py] : START SUBSCRIBER')
-<<<<<<< HEAD
-    sub = rospy.Subscriber(topicname, nasco_sisbb_msg, b.set_command)
-=======
-    sub = rospy.Subscriber(topicname_sub, nasco_sisbb_msg, b.set_command)
->>>>>>> 056deb97209b639c386510af585ff60804086498
+    sub = rospy.Subscriber(topicname_sub, nasco_sisbb_sub_msg, b.set_command)
     rospy.spin()

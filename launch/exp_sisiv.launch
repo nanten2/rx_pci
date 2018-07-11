@@ -1,0 +1,4 @@
+<launch>
+  <node pkg="rx_pci_single_ros" name="sisbb_controller" type="sisiv_measure.py"/>
+  <node pkg="rx_pci_single_ros" name='save_logger' type='save_logger.py'/>
+</launch>

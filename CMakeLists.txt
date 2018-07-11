@@ -56,6 +56,7 @@ find_package(catkin REQUIRED COMPONENTS
    pfeiffer_tpg261_msg.msg
    nasco_sisbb_sub_msg.msg
    nasco_sisbb_pub_msg.msg
+   save_logger_high_flag_msg.msg
 )
 
 ## Generate services in the 'srv' folder

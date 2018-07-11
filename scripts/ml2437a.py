@@ -8,7 +8,7 @@ from NASCORX_System.device import ML2437A
 
 node_name = 'ml2437a'
 
-IP_adress = '192.168.100.116'
+IP_adress = '192.168.100.44'
 port = 13
 
 class ml2437a(object):

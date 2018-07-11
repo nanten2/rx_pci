@@ -72,7 +72,7 @@ class save_logger(object):
 
     def sisbb(self, req):
         print(req)
-        self.f.write(self.sb_template.format(req.ch1_mv, req.ch1_ua, req.ch2_mv, req.ch2_ua))
+        self.f.write(self.sb_template.format(req.timestamp, req.ch1_mv, req.ch1_ua, req.ch2_mv, req.ch2_ua))
         pass
 
         

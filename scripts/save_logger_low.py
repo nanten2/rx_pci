@@ -2,6 +2,7 @@
 
 import os
 import time
+import numpy
 import datetime
 
 import rospy
@@ -26,21 +27,24 @@ class save_logger_low(object):
         self.ch2_mv = 0
         self.ch2_ua = 0
         pass
-        
+
     def callback_l218(self, req):
         self.timestamp = req.timestamp
         self.ch1_K = req.ch1_K
         return
 
+
     def callback_ml2437a(self, req):
         self.dBm = req.dBm
         return
+
 
     def callback_sisbb(self, req):
         self.ch1_mv = req.ch1_mv
         self.ch1_ua = req.ch1_ua
         self.ch2_mv = req.ch2_mv
         self.ch2_ua = req.ch2_ua
+        self.pm_mv = req.pm_mv
         return
 
     def write_file(self):
@@ -65,7 +69,7 @@ class save_logger_low(object):
             f.write(msg1)
             f.close()
 
-            time.sleep(10)
+            time.sleep(5)
             continue
         return
     

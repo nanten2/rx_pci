@@ -29,8 +29,8 @@ class monitor_pm(object):
         saveto = os.path.join(home_dir, filename)
         print('SaveDir is {saveto}'.format(**locals()))
         while not rospy.is_shutdown():
-            f = open(saveto, 'w')
-            msg1 = '{self.timestamp:.1f} {self.dBm:+.3f}'.format(**locals())
+            f = open(saveto, 'a')
+            msg1 = '{self.timestamp:.1f} {self.dBm:+.3f}\n'.format(**locals())
             msg2 = '{self.timestamp:.1f} {self.dBm:+.3f}dBm'.format(**locals())
             print(msg2)
             f.write(msg1)

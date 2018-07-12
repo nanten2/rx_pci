@@ -5,9 +5,11 @@ import rospy
 import std_msgs
 from rx_pci_single_ros.msg import nasco_sisbb_pub_msg
 from rx_pci_single_ros.msg import nasco_sisbb_sub_msg
+from rx_pci_single_ros.msg import ml2437a_msg
 
 import sys
 import time
+import numpy
 import threading
 import pyinterface
 ad = pyinterface.open(3177, 0)
@@ -51,24 +53,32 @@ class bb_controller(object):
         
         
     def nascosisbb_iv_monitor(self):
-        pub = rospy.Publisher(topicname_pub, nasco_sisbb_pub_msg, queue_size=1)
-        msg = nasco_sisbb_pub_msg()
+        pub1 = rospy.Publisher(topicname_pub, nasco_sisbb_pub_msg, queue_size=1)
+        pub2 = rospy.Publisher('ml2437a', ml2437a_msg, queue_size=1)
+        msg1 = nasco_sisbb_pub_msg()
+        msg2 = ml2437a_msg()
 
         while not rospy.is_shutdown():
             ret4 = ad.input_ad('ch5') * 10 # mV
             ret5 = ad.input_ad('ch6') * 1000 # uA         
             ret6 = ad.input_ad('ch7') * 10 # mV
             ret7 = ad.input_ad('ch8') * 1000 # uA
+            ret10 = ad.input_ad('ch26', 'single') * 2
             
-            msg.timestamp = time.time()
-            msg.ch1_mv = ret4
-            msg.ch1_ua = ret5
-            msg.ch2_mv = ret6
-            msg.ch2_ua = ret7
+            msg1.timestamp = time.time()
+            msg1.ch1_mv = ret4
+            msg1.ch1_ua = ret5
+            msg1.ch2_mv = ret6
+            msg1.ch2_ua = ret7
+            msg2.timestamp = time.time()
+            p = numpy.polyfit([-5, 5], [-40, 0], 1)
+            pm_mv = numpy.polyval(p, ret10)
+            msg2.dBm = pm_mv
 
-            pub.publish(msg)
+            pub1.publish(msg1)
+            pub2.publish(msg2)
             # time.sleep(rete)
-            time.sleep(0.05)
+            # time.sleep(0.02)
             
 
     def start_thread_ROS(self):

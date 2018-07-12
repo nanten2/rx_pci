@@ -48,5 +48,5 @@ if __name__=='__main__':
         msg.ch8_K = ret[7]
         pub.publish(msg)
 
-        time.sleep(rate)
+        # time.sleep(rate)
         continue

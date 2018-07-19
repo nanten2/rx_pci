@@ -20,7 +20,7 @@ interval = 0.5
 roop = int((final_voltage - initial_voltage) / step)
 
 for i in range(roop+1):
-    ctrl.nasco_sisbb_set_voltage(ch=0, voltage=i*step, interval)
+    ctrl.nasco_sisbb_set_voltage(ch=0, voltage=i*step, 0.1)
     time.sleep(interval)
 
 ctrl.nasco_sisbb_set_voltage(ch=0, voltage=0, interval)

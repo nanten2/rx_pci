@@ -31,6 +31,7 @@ class save_logger_high(object):
         self.ch1_ua = 0
         self.ch2_mv = 0
         self.ch2_ua = 0
+        self.num = 0
 
     def set_flag(self, req):
         self.timestamp = req.timestamp
@@ -98,3 +99,4 @@ if __name__ == '__main__':
     sub_sisbb = rospy.Subscriber('nasco_sisbb', nasco_sisbb_pub_msg, st.callback_sisbb, queue_size=1)
     sub_flag = rospy.Subscriber('save_controller', save_logger_high_flag_msg, st.set_flag, queue_size=1)
     rospy.spin()
+    

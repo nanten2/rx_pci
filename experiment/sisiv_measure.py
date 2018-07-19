@@ -18,14 +18,14 @@ pub.publish(msg)
 
 initial_voltage = 0 # mV
 final_voltage = 7 # mV
-step = 0.01 # mV
+step = 0.1 # mV
 roop = int((final_voltage - initial_voltage) / step)
 
 for i in range(roop+1):
     # ctrl.nasco_sisbb_set_voltage(ch=3, voltage=i*step, interval=0.1)
     # ctrl.nasco_sisbb_set_voltage(ch=3, voltage=i*step, interval=0.1)
     ctrl.nasco_sisbb_set_voltage(ch=0, voltage=i*step, interval=0.1)    
-    time.sleep(0.03)
+    time.sleep(3)
 
 ctrl.nasco_sisbb_set_voltage(ch=1, voltage=0, interval=0.1)
 ctrl.nasco_sisbb_set_voltage(ch=2, voltage=0, interval=0.1)

@@ -11,7 +11,7 @@ from rx_pci_single_ros.msg import save_logger_high_flag_msg
 pub = rospy.Publisher('save_controller', save_logger_high_flag_msg, queue_size=1)
 
 msg = save_logger_high_flag_msg()
-msg.timestamp = str(time.time())
+
 time.sleep(0.1)
 print(msg)
 pub.publish(msg)

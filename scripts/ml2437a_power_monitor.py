@@ -2,7 +2,7 @@
 
 import rospy
 import std_msgs
-form rx_pci_single_ros.msg import ml2437a_msg
+from rx_pci_single_ros.msg import ml2437a_msg
 
 import sys
 import time
@@ -22,7 +22,7 @@ if __name__ == '__main__':
     # setup devices
     # -------------
     try:
-        pm = ML2437A.ML2437A(host, port)
+        pm = ML2437A.ml2437a(host, port)
     except OSError as e:
         rospy.logerr("{e.strerror}. host={host}".format(**locals()))
         sys.exit()

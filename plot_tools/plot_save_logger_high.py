@@ -37,12 +37,12 @@ sis_i2 = d_sisbb[:,4]
 # --
 matplotlib.rcParams['font.size'] = 9
 matplotlib.rcParams['font.family'] = 'freesans'
-matplotlib.rcParams['xtick.top'] = True
-matplotlib.rcParams['xtick.bottom'] = True
+# matplotlib.rcParams['xtick.top'] = True
+# matplotlib.rcParams['xtick.bottom'] = True
 matplotlib.rcParams['xtick.direction'] = 'in'
 matplotlib.rcParams['xtick.minor.visible'] = True
-matplotlib.rcParams['ytick.left'] = True
-matplotlib.rcParams['ytick.right'] = True
+# matplotlib.rcParams['ytick.left'] = True
+# matplotlib.rcParams['ytick.right'] = True
 matplotlib.rcParams['ytick.direction'] = 'in'
 matplotlib.rcParams['ytick.minor.visible'] = True
 

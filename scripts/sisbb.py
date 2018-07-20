@@ -55,15 +55,15 @@ class sisbb_controller(object):
     def sisbb_iv_monitor(self):
         pub1 = rospy.Publisher(tname_pub, sisbb_pub_msg, queue_size=1)
         pub2 = rospy.Publisher('ml2437a', ml2437a_msg, queue_size=1)
-        msg1 = nasco_sisbb_pub_msg()
+        msg1 = sisbb_pub_msg()
         msg2 = ml2437a_msg()
 
         while not rospy.is_shutdown():
-            ret4 = ad.input_ad('ch5') * 10 # mV
-            ret5 = ad.input_ad('ch6') * 1000 # uA         
-            ret6 = ad.input_ad('ch7') * 10 # mV
-            ret7 = ad.input_ad('ch8') * 1000 # uA
-            ret10 = ad.input_ad('ch26', 'single') * 2
+            ret4 = ad.input_ad('ch1') * 10 # mV
+            ret5 = ad.input_ad('ch2') * 1000 # uA         
+            ret6 = ad.input_ad('ch3') * 10 # mV
+            ret7 = ad.input_ad('ch4') * 1000 # uA
+            ret10 = ad.input_ad('ch26', 'single')
             
             msg1.timestamp = time.time()
             msg1.ch1_mv = ret4

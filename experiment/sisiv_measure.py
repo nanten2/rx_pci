@@ -8,7 +8,7 @@ from rx_pci_single_ros.msg import logger_high_flag_msg
 
 # node_name = 'save_controller'
 # rospy.init_node(node_name)
-tname = 'save_controller'
+tname = 'logger_controller'
 pub = rospy.Publisher(tname, logger_high_flag_msg, queue_size=1)
 
 msg = logger_high_flag_msg()
@@ -26,14 +26,16 @@ for i in range(roop+1):
     # ctrl.nasco_sisbb_set_voltage(ch=3, voltage=i*step, interval=0.1)
     # ctrl.nasco_sisbb_set_voltage(ch=3, voltage=i*step, interval=0.1)
     ctrl.sisbb_set_voltage(ch=0, voltage=i*step, interval=0.1)
-    time.sleep(3)
+    time.sleep(0.1)
 
-ctrl.sisbb_set_voltage(ch=1, voltage=0, interval=0.1)
-ctrl.sisbb_set_voltage(ch=2, voltage=0, interval=0.1)
-ctrl.sisbb_set_voltage(ch=3, voltage=0, interval=0.1)
-ctrl.sisbb_set_voltage(ch=4, voltage=0, interval=0.1)
+ctrl.sisbb_set_voltage(ch=0, voltage=0, interval=0.1)
+# ctrl.sisbb_set_voltage(ch=1, voltage=0, interval=0.1)
+# ctrl.sisbb_set_voltage(ch=2, voltage=0, interval=0.1)
+# ctrl.sisbb_set_voltage(ch=3, voltage=0, interval=0.1)
+# ctrl.sisbb_set_voltage(ch=4, voltage=0, interval=0.1)
 
 msg = logger_high_flag_msg()
 msg.timestamp = ''
 print(msg)
+time.sleep(0.1)
 pub.publish(msg)

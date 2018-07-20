@@ -17,8 +17,8 @@ pub.publish(msg)
 
 initial_voltage = 0.
 final_voltage = 7.
-step = 0.01
-interval = 0.5
+step = 0.1
+interval = 2
 roop = int((final_voltage - initial_voltage) / step)
 
 for i in range(roop+1):

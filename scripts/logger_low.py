@@ -12,8 +12,8 @@ from rx_pci_single_ros.msg import sisbb_pub_msg
 
 # --
 data_exp_dir = '/home/amigos/data/experiment/'
-node_name = 'logger_low'
-home_dir = os.path.join(data_exp_dir, node_name)
+nname = 'logger_low'
+home_dir = os.path.join(data_exp_dir, nname)
 # --
 
 class logger_low(object):
@@ -82,5 +82,5 @@ if __name__ == '__main__':
     print('start recording [filename :'+time.strftime("%Y_%m_%d_%H_%M_%S", ut)+'.txt]')
     l218_sub = rospy.Subscriber('lakeshore_218', lakeshore_218_msg, st.callback_l218, queue_size=1)
     pm_sub = rospy.Subscriber('ml2437a', ml2437a_msg, st.callback_ml2437a, queue_size=1)
-    sisbb_sub = rospy.Subscriber('sisbb', sisbb_pub_msg, st.callback_sisbb, queue_size=1)
+    sisbb_sub = rospy.Subscriber('sisbb_pub', sisbb_pub_msg, st.callback_sisbb, queue_size=1)
     st.write_file()

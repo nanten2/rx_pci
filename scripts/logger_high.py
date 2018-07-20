@@ -7,17 +7,17 @@ import time
 import rospy
 from rx_pci_single_ros.msg import lakeshore_218_msg
 from rx_pci_single_ros.msg import ml2437a_msg
-from rx_pci_single_ros.msg import nasco_sisbb_pub_msg
-from rx_pci_single_ros.msg import save_logger_high_flag_msg
+from rx_pci_single_ros.msg import sisbb_pub_msg
+from rx_pci_single_ros.msg import logger_high_flag_msg
 
 # --
 data_exp_dir = '/home/amigos/data/experiment/'
-_node_name = 'save_logger_high/'
-node_name = 'save_logger_high'
-home_dir = os.path.join(data_exp_dir, _node_name)
+dir_name = 'logger_high/'
+node_name = 'logger_high'
+home_dir = os.path.join(data_exp_dir, dir_name)
 # --
 
-class save_logger_high(object):
+class logger_high(object):
 
     def __init__(self):
         self.file_timestamp = 0

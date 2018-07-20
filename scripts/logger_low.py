@@ -8,15 +8,15 @@ import datetime
 import rospy
 from rx_pci_single_ros.msg import lakeshore_218_msg
 from rx_pci_single_ros.msg import ml2437a_msg
-from rx_pci_single_ros.msg import nasco_sisbb_pub_msg
+from rx_pci_single_ros.msg import sisbb_pub_msg
 
 # --
 data_exp_dir = '/home/amigos/data/experiment/'
-node_name = 'save_logger_low'
+node_name = 'logger_low'
 home_dir = os.path.join(data_exp_dir, node_name)
 # --
 
-class save_logger_low(object):
+class logger_low(object):
     
     def __init__(self):
         self.timestamp = 0
@@ -33,11 +33,9 @@ class save_logger_low(object):
         self.ch1_K = req.ch1_K
         return
 
-
     def callback_ml2437a(self, req):
         self.dBm = req.dBm
         return
-
 
     def callback_sisbb(self, req):
         self.ch1_mv = req.ch1_mv
@@ -69,22 +67,20 @@ class save_logger_low(object):
             f.write(msg1)
             f.close()
 
-            time.sleep(5)
+            time.sleep(3)
             continue
         return
-    
 
 if __name__ == '__main__':
     if not os.path.exists(home_dir):
         os.makedirs(home_dir)
         pass
 
-    st = save_logger_low()
-    rospy.init_node(node_name)
+    st = logger_low()
+    rospy.init_node(nname)
     ut = time.gmtime()
     print('start recording [filename :'+time.strftime("%Y_%m_%d_%H_%M_%S", ut)+'.txt]')
-    sub_l218 = rospy.Subscriber('lakeshore_218', lakeshore_218_msg, st.callback_l218, queue_size=1)
-    sub_pm = rospy.Subscriber('ml2437a', ml2437a_msg, st.callback_ml2437a, queue_size=1)
-    sub_sisbb = rospy.Subscriber('nasco_sisbb', nasco_sisbb_pub_msg, st.callback_sisbb, queue_size=1)
+    l218_sub = rospy.Subscriber('lakeshore_218', lakeshore_218_msg, st.callback_l218, queue_size=1)
+    pm_sub = rospy.Subscriber('ml2437a', ml2437a_msg, st.callback_ml2437a, queue_size=1)
+    sisbb_sub = rospy.Subscriber('sisbb', sisbb_pub_msg, st.callback_sisbb, queue_size=1)
     st.write_file()
-    

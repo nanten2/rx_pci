@@ -54,9 +54,9 @@ find_package(catkin REQUIRED COMPONENTS
    lakeshore_218_msg.msg
    ondo_msg.msg
    pfeiffer_tpg261_msg.msg
-   nasco_sisbb_sub_msg.msg
-   nasco_sisbb_pub_msg.msg
-   save_logger_high_flag_msg.msg
+   sisbb_sub_msg.msg
+   sisbb_pub_msg.msg
+   logger_high_flag_msg.msg
 )
 
 ## Generate services in the 'srv' folder

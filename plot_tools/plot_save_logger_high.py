@@ -92,5 +92,3 @@ ax[5].set_title('SIS-2 I-V')
 
 fig.suptitle('save_logger_high : '+target) 
 fig.savefig(saveto2)
-
-

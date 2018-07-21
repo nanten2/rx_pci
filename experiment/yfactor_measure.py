@@ -15,15 +15,15 @@ pub.publish(msg)
 
 initial_voltage = 0.
 final_voltage = 7.
-step = 0.01
-interval = 0.5
+step = 0.1
+interval = 2.
 roop = int((final_voltage - initial_voltage) / step)
 
 for i in range(roop+1):
-    ctrl.nasco_sisbb_set_voltage(ch=0, voltage=i*step, 0.1)
+    ctrl.nasco_sisbb_set_voltage(ch=0, voltage=i*step, interval=0.1)
     time.sleep(interval)
 
-ctrl.nasco_sisbb_set_voltage(ch=0, voltage=0, interval)
+ctrl.nasco_sisbb_set_voltage(ch=0, voltage=0, interval=0.1)
 
 msg = save_logger_high_flag_msg()
 msg.timestamp = ''

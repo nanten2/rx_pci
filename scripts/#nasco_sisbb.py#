@@ -64,7 +64,7 @@ class bb_controller(object):
             ret5 = ad.input_ad('ch2') * 1000 / 2 # uA         
             ret6 = ad.input_ad('ch3') * 10 / 2 # mV
             ret7 = ad.input_ad('ch4') * 1000 / 2 # uA
-            ret10 = ad.input_ad('ch26', 'single') 
+            ret10 = ad.input_ad('ch26', 'single') * 2
             
             msg1.timestamp = time.time()
             msg1.ch1_mv = ret4
@@ -77,7 +77,7 @@ class bb_controller(object):
             msg2.dBm = pm_mv
 
             pub1.publish(msg1)
-            pub2.publish(msg2)
+            # pub2.publish(msg2)
             # time.sleep(rete)
             # time.sleep(0.02)
             

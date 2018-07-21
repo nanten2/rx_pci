@@ -25,9 +25,9 @@ for i in range(roop+1):
     # ctrl.nasco_sisbb_set_voltage(ch=3, voltage=i*step, interval=0.1)
     # ctrl.nasco_sisbb_set_voltage(ch=3, voltage=i*step, interval=0.1)
     ctrl.nasco_sisbb_set_voltage(ch=0, voltage=i*step, interval=0.1)    
-    time.sleep(3)
+    time.sleep(3.0)
 
-ctrl.nasco_sisbb_set_voltage(ch=1, voltage=0, interval=0.1)
+ctrl.nasco_sisbb_set_voltage(ch=0, voltage=0, interval=0.1)
 ctrl.nasco_sisbb_set_voltage(ch=2, voltage=0, interval=0.1)
 ctrl.nasco_sisbb_set_voltage(ch=3, voltage=0, interval=0.1)
 ctrl.nasco_sisbb_set_voltage(ch=4, voltage=0, interval=0.1)

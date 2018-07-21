@@ -110,8 +110,7 @@ if __name__ == '__main__':
 
     st = logger_high()
     rospy.init_node(node_name)
-    ut = time.gmtime()
-    print('start recording [filename :'+time.strftime("%Y_%m_%d_%H_%M_%S", ut)+'.txt]')
+    print('[logger_high.py] : START SUBSCRIBER ... ')
     sub_l218 = rospy.Subscriber('lakeshore_218', lakeshore_218_msg, st.callback_l218, queue_size=1)
     sub_pm = rospy.Subscriber('ml2437a', ml2437a_msg, st.
 callback_ml2437a, queue_size=1)

@@ -55,21 +55,25 @@ class sisbb_controller(object):
     def sisbb_iv_monitor(self):
         pub1 = rospy.Publisher(tname_pub, sisbb_pub_msg, queue_size=1)
         pub2 = rospy.Publisher('ml2437a', ml2437a_msg, queue_size=1)
+        time.sleep(0.01)
         msg1 = sisbb_pub_msg()
         msg2 = ml2437a_msg()
 
         while not rospy.is_shutdown():
-            ret4 = ad.input_ad('ch1') * 10 # mV
-            ret5 = ad.input_ad('ch2') * 1000 # uA         
-            ret6 = ad.input_ad('ch3') * 10 # mV
-            ret7 = ad.input_ad('ch4') * 1000 # uA
+
+            ret1 = ad.input_ad('ch1') * 10 / 2   # mV
+            ret2 = ad.input_ad('ch2') * 1000 / 2 # uA         
+            ret3 = ad.input_ad('ch3') * 10 / 2   # mV
+            ret4 = ad.input_ad('ch4') * 1000 / 2 # uA
+
             ret10 = ad.input_ad('ch26', 'single')
             
             msg1.timestamp = time.time()
-            msg1.ch1_mv = ret4
-            msg1.ch1_ua = ret5
-            msg1.ch2_mv = ret6
-            msg1.ch2_ua = ret7
+            msg1.ch1_mv = ret1
+            msg1.ch1_ua = ret2
+            msg1.ch2_mv = ret3
+            msg1.ch2_ua = ret4
+
             msg2.timestamp = time.time()
             p = numpy.polyfit([-5, 5], [-40, 0], 1)
             pm_mv = numpy.polyval(p, ret10)
@@ -93,6 +97,6 @@ if __name__ == '__main__':
     rospy.init_node(nname)
     bctrl = sisbb_controller()
     bctrl.start_thread_ROS()
-    print('sisbb.py] : START SUBSCRIBER')
+    print('[sisbb.py] : START SUBSCRIBER ... ')
     sub = rospy.Subscriber(tname_sub, sisbb_sub_msg, bctrl.set_param)
     rospy.spin()

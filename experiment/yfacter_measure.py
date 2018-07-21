@@ -8,8 +8,8 @@ from rx_pci_single_ros.msg import logger_high_flag_msg
 
 initial_voltage = -7 # mV
 final_voltage = 7    # mV
-step = 0.01           # mV
-interval = 0.1       # sec.
+step = 0.02          # mV
+interval = 3         # sec.
 roop = int((final_voltage - initial_voltage) / step)
 
 tname = 'logger_controller'
@@ -20,7 +20,6 @@ msg.timestamp = str(time.time())
 time.sleep(0.1)
 print(msg)
 pub.publish(msg)
-
 try:
     for i in range(roop+1):
         ctrl.sisbb_set_voltage(ch=0, voltage=i*step-final_voltage, interval=0.1) # all ch set voltage
@@ -30,11 +29,14 @@ except KeyboardInterrupt:
     ctrl.sisbb_set_voltage(ch=0, voltage=0, interval=0.1) # all ch set voltage
     msg = logger_high_flag_msg()
     msg.timestamp = ''
+    print(msg)
     time.sleep(0.1)
-    pub.publish(msg)    
+    pub.publish(msg)
     sys.exit()
+    
 
 ctrl.sisbb_set_voltage(ch=0, voltage=0, interval=0.1)
+
 
 msg = logger_high_flag_msg()
 msg.timestamp = ''

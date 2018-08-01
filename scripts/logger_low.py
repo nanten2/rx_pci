@@ -17,7 +17,7 @@ home_dir = os.path.join(data_exp_dir, node_name)
 # --
 
 class logger_low(object):
-    
+
     def __init__(self):
         self.timestamp = 0
         self.ch1_K = 0

@@ -68,7 +68,7 @@ class logger_high(object):
         f.write(msg)
         f.close()
         return
-        
+
     def callback_sisbb(self, req):
         if self.flag == 1:
             return
@@ -96,7 +96,7 @@ if __name__ == '__main__':
     print('start recording [filename :'+time.strftime("%Y_%m_%d_%H_%M_%S", ut)+'.txt]')
     sub_l218 = rospy.Subscriber('lakeshore_218', lakeshore_218_msg, st.callback_l218, queue_size=1)
     sub_pm = rospy.Subscriber('ml2437a', ml2437a_msg, st.callback_ml2437a, queue_size=1)
-    sub_sisbb = rospy.Subscriber('nasco_sisbb', nasco_sisbb_pub_msg, st.callback_sisbb, queue_size=1)
-    sub_flag = rospy.Subscriber('save_controller', save_logger_high_flag_msg, st.set_flag, queue_size=1)
+    sub_sisbb = rospy.Subscriber('nasco_sisbb', sisbb_pub_msg, st.callback_sisbb, queue_size=1)
+    sub_flag = rospy.Subscriber('logger_controller', logger_high_flag_msg, st.set_flag, queue_size=1)
     rospy.spin()
-    
+

@@ -1,5 +1,5 @@
 <launch>
-  <node pkg="rx_pci_single_ros" name="nasco_sisbb_pub" type="nasco_sisbb.py" required="true" output="screen">
+  <node pkg="rx_pci_single_ros" name="sisbb_pub" type="sisbb.py" required="true" output="screen">
     <!-- <remap from="nasco_sisbb" to="nasco_sisbb_1" /> -->
     <param name="~rate" value="0.01" />
   </node>

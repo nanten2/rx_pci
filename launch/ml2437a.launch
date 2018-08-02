@@ -1,0 +1,8 @@
+<launch>
+  <node pkg="rx_pci_single_ros" name="ml2437a" type="ml2437a_power_monitor.py" required="true">
+    <!-- <remap from="l218" to="l218_1" /> -->
+    <param name="~host" value="192.168.100.44" />
+    <param name="~port" value="13" />
+    <param name="~rate" value="1" />
+  </node>
+</launch>

@@ -8,7 +8,7 @@ project(rx_pci_single_ros)
 ## if COMPONENTS list like find_package(catkin REQUIRED COMPONENTS xyz)
 ## is used, also find other catkin packages
 find_package(catkin REQUIRED COMPONENTS
-  roscpp
+  # roscpp
   rospy
   std_msgs
   message_generation
@@ -54,9 +54,9 @@ find_package(catkin REQUIRED COMPONENTS
    lakeshore_218_msg.msg
    ondo_msg.msg
    pfeiffer_tpg261_msg.msg
-   nasco_sisbb_sub_msg.msg
-   nasco_sisbb_pub_msg.msg
-   save_logger_high_flag_msg.msg
+   sisbb_sub_msg.msg
+   sisbb_pub_msg.msg
+   logger_high_flag_msg.msg
 )
 
 ## Generate services in the 'srv' folder
@@ -110,9 +110,9 @@ find_package(catkin REQUIRED COMPONENTS
 ## DEPENDS: system dependencies of this project that dependent projects also need
 catkin_package(
 #  INCLUDE_DIRS include
-#  LIBRARIES rx_pci_single_ros
-#  CATKIN_DEPENDS roscpp rospy std_msgs
-#  DEPENDS system_lib
+  LIBRARIES rx_pci_single_ros
+  CATKIN_DEPENDS roscpp rospy std_msgs
+  DEPENDS system_lib
 )
 
 ###########

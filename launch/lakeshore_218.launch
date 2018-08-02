@@ -1,8 +1,8 @@
 <launch>
   <node pkg="rx_pci_single_ros" name="lakeshore_218" type="l218_temp_monitor.py" required="true">
     <!-- <remap from="l218" to="l218_1" /> -->
-    <param name="~host" value="192.168.100.12" />
-    <param name="~port" value="12" />
+    <param name="~host" value="192.168.100.106" />
+    <param name="~port" value="1" />
     <param name="~rate" value="1" />
   </node>
 </launch>

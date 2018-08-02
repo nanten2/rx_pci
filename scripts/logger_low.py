@@ -67,7 +67,7 @@ class logger_low(object):
             f.write(msg1)
             f.close()
 
-            time.sleep(3)
+            time.sleep(1)
             continue
         return
 

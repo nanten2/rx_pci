@@ -46,11 +46,11 @@ class sisbb_controller(object):
             # print(mv)
             # da.output_da_sim(ch, mv)
             da.output_da('ch1-ch16', mv)
+            # da.output_da_sim('ch1', mv)
             self.flag = 1
             # time.sleep(rate)
             time.sleep(0.1)
             continue
-        
         
     def sisbb_iv_monitor(self):
         pub1 = rospy.Publisher(tname_pub, sisbb_pub_msg, queue_size=1)
@@ -82,7 +82,7 @@ class sisbb_controller(object):
             pub1.publish(msg1)
             pub2.publish(msg2)
             # time.sleep(rete)
-            # time.sleep(0.02)
+            time.sleep(0.02)
             
 
     def start_thread_ROS(self):

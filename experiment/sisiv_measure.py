@@ -8,8 +8,8 @@ from rx_pci_single_ros.msg import logger_high_flag_msg
 
 initial_voltage = -7 # mV
 final_voltage = 7    # mV
-step = 0.05          # mV
-interval = 0.1         # sec.
+step = 0.1          # mV
+interval = 0.2         # sec.
 roop = int((final_voltage - initial_voltage) / step)
 
 tname = 'logger_controller'

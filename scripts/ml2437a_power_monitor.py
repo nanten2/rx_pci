@@ -19,10 +19,17 @@ if __name__ == '__main__':
     port = rospy.get_param('~port')
     rate = rospy.get_param('~rate')
 
+    ip1 = '192.168.100.116'
+    port1 = 13
+    ip2 = '192.168.100.161'
+    port2 = 13
+
     # setup devices
     # -------------
     try:
-        pm = ML2437A.ml2437a(host, port)
+        pm1 = ML2437A.ml2437a(ip1, port1)
+        pm2 = ML2437A.ml2437a(ip2, port2)
+        
     except OSError as e:
         rospy.logerr("{e.strerror}. host={host}".format(**locals()))
         sys.exit()
@@ -36,8 +43,9 @@ if __name__ == '__main__':
     while not rospy.is_shutdown():
         msg = ml2437a_msg()
         msg.timestamp = time.time()
-        msg.dBm = pm.measure()
-
+        msg.dBm1 = pm1.measure()
+        msg.dBm2 = pm2.measure()
+        
         pub.publish(msg)
 
         # time.sleep(rate)

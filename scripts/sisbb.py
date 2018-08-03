@@ -61,21 +61,12 @@ class sisbb_controller(object):
         time.sleep(0.1)
 
         while not rospy.is_shutdown():
-<<<<<<< HEAD:scripts/nasco_sisbb.py
-            ret4 = ad.input_ad('ch1') * 10 / 2 # mV
-            ret5 = ad.input_ad('ch2') * 1000 / 2 # uA         
-            ret6 = ad.input_ad('ch3') * 10 / 2 # mV
-            ret7 = ad.input_ad('ch4') * 1000 / 2 # uA
-            ret10 = ad.input_ad('ch26', 'single') 
-=======
-
             ret1 = ad.input_ad('ch1') * 10 / 2   # mV
             ret2 = ad.input_ad('ch2') * 1000 / 2 # uA         
             ret3 = ad.input_ad('ch3') * 10 / 2   # mV
             ret4 = ad.input_ad('ch4') * 1000 / 2 # uA
 
             ret10 = ad.input_ad('ch26', 'single')
->>>>>>> hudai-master:scripts/sisbb.py
             
             msg1.timestamp = time.time()
             msg1.ch1_mv = ret1
@@ -86,10 +77,10 @@ class sisbb_controller(object):
             msg2.timestamp = time.time()
             p = numpy.polyfit([-5, 5], [-40, 0], 1)
             pm_mv = numpy.polyval(p, ret10)
-            msg2.dBm = pm_mv
+            msg2.dBm1 = pm_mv
 
             pub1.publish(msg1)
-            pub2.publish(msg2)
+            # pub2.publish(msg2)
             # time.sleep(rete)
             time.sleep(0.02)
             

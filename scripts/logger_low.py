@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 
 import os
+import sys
 import time
 import numpy
 import datetime
@@ -16,12 +17,17 @@ nname = 'logger_low'
 home_dir = os.path.join(data_exp_dir, nname)
 # --
 
+interval = int(sys.argv[1])
+
 class logger_low(object):
     
     def __init__(self):
         self.timestamp = 0
-        self.ch1_K = 0
-        self.dBm = 0
+        self.ch5_K = 0
+        self.ch6_K = 0
+        self.ch7_K = 0
+        self.dBm1 = 0
+        self.dBm2 = 0
         self.ch1_mv = 0
         self.ch1_ua = 0
         self.ch2_mv = 0
@@ -30,11 +36,14 @@ class logger_low(object):
 
     def callback_l218(self, req):
         self.timestamp = req.timestamp
-        self.ch1_K = req.ch1_K
+        self.ch5_K = req.ch5_K
+        self.ch6_K = req.ch6_K
+        self.ch7_K = req.ch7_K
         return
 
     def callback_ml2437a(self, req):
-        self.dBm = req.dBm
+        self.dBm1 = req.dBm1
+        self.dBm2 = req.dBm2
         return
 
     def callback_sisbb(self, req):
@@ -55,19 +64,23 @@ class logger_low(object):
         while not rospy.is_shutdown():
             ctime = time.time()
             f = open(saveto, 'a')
-            ch1_K = self.ch1_K
-            dBm = self.dBm
+            ch5_K = self.ch5_K
+            ch6_K = self.ch6_K
+            ch7_K = self.ch7_K            
+            dBm1 = self.dBm1
+            dBm2 = self.dBm2
             ch1_mv = self.ch1_mv
             ch1_ua = self.ch1_ua
             ch2_mv = self.ch2_mv
             ch2_ua = self.ch2_ua
-            msg1 = '{ctime:.1f} {ch1_K:.1f} {dBm:+.1f} {ch1_mv:+.1f} {ch1_ua:+.1f} {ch2_mv:+.1f} {ch2_ua:+.1f}\n'.format(**locals())
-            msg2 = '{ctime:.1f} {ch1_K:.1f}K {dBm:+.1f}dBm {ch1_mv:+.1f}mV {ch1_ua:+.1f}uA {ch2_mv:+.1f}mV {ch2_ua:+.1f}uA'.format(**locals())
+            msg1 = '{ctime:.1f} {ch5_K:.1f} {ch6_K:.1f} {ch7_K:.1f} {dBm1:+.1f} {dBm2:+.1f} {ch1_mv:+.1f} {ch1_ua:+.1f} {ch2_mv:+.1f} {ch2_ua:+.1f}\n'.format(**locals())
+            msg2 = '{ctime:.1f} {ch5_K:.1f}K {ch6_K:.1f}K {ch7_K:.1f}K {dBm1:+.1f}dBm {dBm2:+.1f}dBm {ch1_mv:+.1f}mV {ch1_ua:+.1f}uA {ch2_mv:+.1f}mV {ch2_ua:+.1f}uA'.format(**locals())            
+            # msg2 = '{ctime:.1f} {ch1_K:.1f}K {dBm:+.1f}dBm {ch1_mv:+.1f}mV {ch1_ua:+.1f}uA {ch2_mv:+.1f}mV {ch2_ua:+.1f}uA'.format(**locals())
             print(msg2)
             f.write(msg1)
             f.close()
 
-            time.sleep(1)
+            time.sleep(interval)
             continue
         return
 

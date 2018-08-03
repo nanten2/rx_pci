@@ -38,7 +38,9 @@ if __name__ == '__main__':
 
         msg = lakeshore_218_msg()
         msg.timestamp = time.time()
-        msg.ch1_K = ret[0]
+        msg.ch5_K = ret[4]
+        msg.ch6_K = ret[5]
+        msg.ch7_K = ret[6]
 
         pub.publish(msg)
 

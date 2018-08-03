@@ -26,8 +26,11 @@ class logger_high(object):
         self.timestamp_l218 = 0
         self.timestamp_ml2437a = 0
         self.timestamp_sisbb = 0
-        self.ch1_K = 0
-        self.dBm = 0
+        self.ch5_K = 0
+        self.ch6_K = 0
+        self.ch7_k = 0
+        self.dBm1 = 0
+        self.dBm2 = 0
         self.ch1_mv = 0
         self.ch1_ua = 0
         self.ch2_mv = 0
@@ -42,27 +45,21 @@ class logger_high(object):
             self.flag = 1
         else:
             self.flag = 0
-            # _time = time.time()
-            # day = _time.strftime('%Y%m%d_')
-            # name = _time.strftime('%H%M%S')
-            # _dir_name = day + name
-            # os.makedirs(home_dir + 'aaa')
             _ = datetime.datetime.fromtimestamp(float(self.timestamp))
             self.day = _.strftime('%Y%m%d_')
             self.name = _.strftime('%H%M%S')
             os.makedirs(home_dir + self.day + self.name)
-            # os.makedirs(home_dir + self.timestamp)
 
     def callback_l218(self, req):
         if self.flag == 1:
             return
-        # filename = home_dir + self.timestamp + '/l218.txt'
         filename = home_dir + self.day + self.name + '/l218.txt'
-        # filename = self.saveto + '/l218.txt'
         print(filename)
         self.timestamp_l218 = req.timestamp
-        self.ch1_K = req.ch1_K
-        msg = '{self.timestamp_l218} {self.ch1_K}\n'.format(**locals())
+        self.ch5_K = req.ch5_K
+        self.ch6_K = req.ch6_K
+        self.ch7_K = req.ch7_K        
+        msg = '{self.timestamp_l218} {self.ch5_K} {self.ch6_K} {self.ch7_K}\n'.format(**locals())
         print(msg)
         f = open(filename, 'a')
         f.write(msg)
@@ -73,11 +70,10 @@ class logger_high(object):
         if self.flag == 1:
             return
         filename = home_dir + self.day + self.name + '/ml2437a.txt'        
-        # filename = home_dir + self.timestamp + '/ml2437a.txt'
-        # filename = self.saveto + '/ml2437a.txt'
         self.timestamp_ml2437a = req.timestamp
-        self.dBm = req.dBm
-        msg = '{self.timestamp_ml2437a} {self.dBm}\n'.format(**locals())
+        self.dBm1 = req.dBm1
+        self.dBm2 = req.dBm2
+        msg = '{self.timestamp_ml2437a} {self.dBm1} {self.dBm2}\n'.format(**locals())
         print(msg)
         print(filename)
         f = open(filename, 'a')
@@ -89,8 +85,6 @@ class logger_high(object):
         if self.flag == 1:
             return
         filename = home_dir + self.day + self.name + '/sisbb.txt'
-        # filename = home_dir + self.timestamp + '/sisbb.txt'
-        # filename = self.saveto + '/sisbb.txt'
         self.timestamp_sisbb = req.timestamp
         self.ch1_mv = req.ch1_mv
         self.ch1_ua = req.ch1_ua

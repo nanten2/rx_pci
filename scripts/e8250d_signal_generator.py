@@ -17,67 +17,67 @@ class e8257d_controller(object):
         self.host = rospy.get_param('~host')
         self.port = rospy.get_param('~port')
         self.sg = E8257D.e8257d(self.host, self.port)
-        self.pub_freq = rospy.Publisher('lo_1st_freq', Float64, quere_size=1)
-        self.pub_power = rospy.Publisher('lo_1st_power', Float64, quere_size=1)
-        self.pub_onoff = rospy.Publisher('lo_1st_onoff', Float64, quere_size=1)
-        self.sub_freq.rospy.Subscriber('lo_1st_freq.cmd', lo_1st_freq_msg, _set_freq)
-        self.sub_power.rospy.Subscriber('lo_1st_power.cmd', lo_1st_power_msg, _set_power)
-        self.rospy.Subscriber('lo_1st_onoff.cmd', lo_1st_onoff_msg, _set_onoff)
+        self.pub_freq = rospy.Publisher('lo_1st_freq', Float64, queue_size=1)
+        self.pub_power = rospy.Publisher('lo_1st_power', Float64, queue_size=1)
+        self.pub_onoff = rospy.Publisher('lo_1st_onoff', Float64, queue_size=1)
 
     def _set_freq(self, q):
-        target = q.lo_1st_freq
+        target = q.data
         self.sg.set_freq(target, 'GHz')
 
         while True:
             current = self.sg.query_freq()
 
-            if target != cuurent:
+            if target != current:
                 self.pub_freq.publish(current)
                 time.sleep(self.pinterval)
                 pass
 
-            elif target == cuurent:
-                self.pub_freq.publish(curent)
+            elif target == current:
+                self.pub_freq.publish(current)
                 time.sleep(self.pinterval)
                 break
 
     def _set_power(self, q):
+        target = q.data
         self.sg.set_power(target)
 
         while True:
             current = self.sg.query_power()
 
-            if target != cuurent:
+            if target != current:
                 self.pub_power.publish(current)
                 time.sleep(self.pinterval)
                 pass
 
-            elif target == cuurent:
-                self.pub_power.publish(cuurent)
+            elif target == current:
+                self.pub_power.publish(current)
                 time.sleep(self.pinterval)
                 break
 
     def _set_onoff(self, q):
-        target = q.lo_1st_onoff
+        target = q.data
         self.sg.set_onoff(target)
 
         while True:
             current = self.sg.query_onoff()
             msg.lo_1st_onoff_msg = current
 
-            if target != cuurent:
+            if target != current:
                 self.pub_onoff.publish(current)
                 time.sleep(self.pinterval)
                 pass
 
-            elif target == cuurent:
+            elif target == current:
                 self.pub_onoff.publish(current)
                 time.sleep(self.pinterval)
                 break
 
 if __name__ == '__main__':
     rospy.init_node(nname)
-    sg_ctrl = e8257d_controller()
-    sg_ctrl.start_thread_ROS()
+    ctrl = e8257d_controller()
+    sub_freq = rospy.Subscriber('lo_1st_freq_cmd', Float64, ctrl._set_freq)
+    sub_power = rospy.Subscriber('lo_1st_power_cmd', Float64, ctrl._set_power)
+    sub_onoff = rospy.Subscriber('lo_1st_onoff_cmd', Float64, ctrl._set_onoff)
     print('[e8257d_signal_generetor] : START SUBSCRIBER ... ')
     rospy.spin()

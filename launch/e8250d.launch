@@ -1,0 +1,8 @@
+<launch>
+  <node pkg="rx_pci_single_ros" name="e8250d" type="e8250d.py" required="true">
+    <!-- <remap from="l218" to="l218_1" /> -->
+    <param name="~host" value="192.168.100.113" />
+    <param name="~port" value="19" />
+    <param name="~rate" value="1" />
+  </node>
+</launch>

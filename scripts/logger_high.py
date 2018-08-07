@@ -58,7 +58,7 @@ class logger_high(object):
         self.timestamp_l218 = req.timestamp
         self.ch5_K = req.ch5_K
         self.ch6_K = req.ch6_K
-        self.ch7_K = req.ch7_K        
+        self.ch7_K = req.ch7_K
         msg = '{self.timestamp_l218} {self.ch5_K} {self.ch6_K} {self.ch7_K}\n'.format(**locals())
         print(msg)
         f = open(filename, 'a')
@@ -69,7 +69,7 @@ class logger_high(object):
     def callback_ml2437a(self, req):
         if self.flag == 1:
             return
-        filename = home_dir + self.day + self.name + '/ml2437a.txt'        
+        filename = home_dir + self.day + self.name + '/ml2437a.txt'
         self.timestamp_ml2437a = req.timestamp
         self.dBm1 = req.dBm1
         self.dBm2 = req.dBm2
@@ -80,7 +80,7 @@ class logger_high(object):
         f.write(msg)
         f.close()
         return
-        
+
     def callback_sisbb(self, req):
         if self.flag == 1:
             return
@@ -111,4 +111,4 @@ callback_ml2437a, queue_size=1)
     sub_sisbb = rospy.Subscriber('sisbb_pub', sisbb_pub_msg, st.callback_sisbb, queue_size=1)
     sub_flag = rospy.Subscriber('logger_controller', logger_high_flag_msg, st.set_flag, queue_size=1)
     rospy.spin()
-    
+

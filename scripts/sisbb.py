@@ -26,7 +26,7 @@ class sisbb_controller(object):
     def __init__(self):
         self.flag = 1
         self.ch = 1
-    
+
     def set_param(self, req):
         self.timestamp = req.timestamp
         self.interval = req.interval
@@ -34,7 +34,7 @@ class sisbb_controller(object):
         self.mv = req.voltage
         self.flag = 0
         return
-    
+
     def sisbb_set_voltage(self):
         while not rospy.is_shutdown():
             if self.flag == 1:
@@ -51,7 +51,7 @@ class sisbb_controller(object):
             # time.sleep(rate)
             time.sleep(0.1)
             continue
-        
+
     def sisbb_iv_monitor(self):
         pub1 = rospy.Publisher(tname_pub, sisbb_pub_msg, queue_size=1)
         pub2 = rospy.Publisher('ml2437a', ml2437a_msg, queue_size=1)
@@ -62,12 +62,12 @@ class sisbb_controller(object):
 
         while not rospy.is_shutdown():
             ret1 = ad.input_ad('ch1') * 10 / 2   # mV
-            ret2 = ad.input_ad('ch2') * 1000 / 2 # uA         
+            ret2 = ad.input_ad('ch2') * 1000 / 2 # uA
             ret3 = ad.input_ad('ch3') * 10 / 2   # mV
             ret4 = ad.input_ad('ch4') * 1000 / 2 # uA
 
             ret10 = ad.input_ad('ch26', 'single')
-            
+
             msg1.timestamp = time.time()
             msg1.ch1_mv = ret1
             msg1.ch1_ua = ret2
@@ -83,7 +83,7 @@ class sisbb_controller(object):
             # pub2.publish(msg2)
             # time.sleep(rete)
             time.sleep(0.02)
-            
+
 
     def start_thread_ROS(self):
         th = threading.Thread(target=self.sisbb_iv_monitor)

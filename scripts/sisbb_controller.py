@@ -23,4 +23,4 @@ def sisbb_set_voltage(ch, voltage, interval):
     msg.timestamp = time.time()
     pub.publish(msg)
     print(msg)
-    
+

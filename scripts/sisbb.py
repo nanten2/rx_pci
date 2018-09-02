@@ -10,7 +10,7 @@ import sys
 import time
 import numpy
 import threading
-import pyinterface
+import pyinterface.tools as pyinterface
 
 ad = pyinterface.open(3177, 0)
 da = pyinterface.open(3408, 0)
@@ -40,15 +40,11 @@ class sisbb_controller(object):
             if self.flag == 1:
                 time.sleep(0.01)
                 continue
-            # ch = 'ch{0}'.format(self.ch)
-            # print(ch)
             mv = self.mv / 3
-            # print(mv)
-            # da.output_da_sim(ch, mv)
-            da.output_da('ch1-ch16', mv)
-            # da.output_da_sim('ch1', mv)
+            da.output_voltage(1, mv)
+            da.output_voltage(2, mv)
+            # da.output_da('ch1-ch16', mv)
             self.flag = 1
-            # time.sleep(rate)
             time.sleep(0.1)
             continue
 
@@ -61,12 +57,17 @@ class sisbb_controller(object):
         time.sleep(0.1)
 
         while not rospy.is_shutdown():
+            '''
             ret1 = ad.input_ad('ch1') * 10 / 2   # mV
             ret2 = ad.input_ad('ch2') * 1000 / 2 # uA
             ret3 = ad.input_ad('ch3') * 10 / 2   # mV
             ret4 = ad.input_ad('ch4') * 1000 / 2 # uA
-
-            ret10 = ad.input_ad('ch26', 'single')
+            '''
+            ret1 = ad.input_voltage(1, 'diff') * 10
+            ret2 = ad.input_voltage(2, 'diff') * 1000
+            ret3 = ad.input_voltage(3, 'diff') * 10
+            ret4 = ad.input_voltage(4, 'diff') * 1000          
+            ret10 = ad.input_voltage(26, 'single')
 
             msg1.timestamp = time.time()
             msg1.ch1_mv = ret1
@@ -78,9 +79,10 @@ class sisbb_controller(object):
             p = numpy.polyfit([-5, 5], [-40, 0], 1)
             pm_mv = numpy.polyval(p, ret10)
             msg2.dBm1 = pm_mv
+            msg2.dBm2 = pm_mv
 
             pub1.publish(msg1)
-            # pub2.publish(msg2)
+            pub2.publish(msg2)
             # time.sleep(rete)
             time.sleep(0.02)
 
